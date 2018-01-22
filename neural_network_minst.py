@@ -30,15 +30,15 @@ class NeuralNetwork:
     # query the neural network
     def query(self, input_list):
         # convert input list to a 2d array
-        inputs = np.arrayprint(input_list, ndmin=2).T
+        inputs = np.array(input_list, ndmin=2).T
 
         # calculate signals going into hidden layer
-        hidden_inputs = numpy.dot(self.w_input_hidden, inputs)
+        hidden_inputs = np.dot(self.w_input_hidden, inputs)
         # calculate signals emerging from hidden layer
         hidden_outputs = self.activation_function(hidden_inputs)
 
         # calculate signals going into output layer
-        final_inputs = numpy.dot(self.w_hidden_output, hidden_inputs)
+        final_inputs = np.dot(self.w_hidden_output, hidden_inputs)
         # calculate signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
 
