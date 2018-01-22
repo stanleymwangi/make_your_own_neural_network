@@ -18,7 +18,7 @@ class NeuralNetwork:
         # weights inside arrays are w_i_j where link is from node i to node j in the next layer
         # example: w_2_1 is weight moderating signal from node 2 to node 1 in the next layer
         self.w_input_hidden = np.random.uniform(low=-1.0, high=1.0, size=(self.hidden_nodes, self.input_nodes))
-        self.w_output_hidden = np.random.uniform(low=-1.0, high=1.0, size=(self.hidden_nodes, self.input_nodes))
+        self.w_hidden_output = np.random.uniform(low=-1.0, high=1.0, size=(self.hidden_nodes, self.input_nodes))
 
         # setup the activation function
         self.activation_function = lambda x: special.expit(x) # using the sigmoid function
@@ -35,7 +35,7 @@ class NeuralNetwork:
         hidden_outputs = self.activation_function(hidden_inputs)
 
         # calculate signals going into output layer
-        final_inputs = numpy.dot(self.w_output_hidden, hidden_inputs)
+        final_inputs = numpy.dot(self.w_hidden_output, hidden_inputs)
         # calculate signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
 
