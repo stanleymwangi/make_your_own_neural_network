@@ -28,7 +28,10 @@ class NeuralNetwork:
         pass
 
     # query the neural network
-    def query(self):
+    def query(self, input_list):
+        # convert input list to a 2d array
+        inputs = np.arrayprint(input_list, ndmin=2).T
+
         # calculate signals going into hidden layer
         hidden_inputs = numpy.dot(self.w_input_hidden, inputs)
         # calculate signals emerging from hidden layer
