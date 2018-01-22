@@ -49,4 +49,5 @@ input_nodes, hidden_nodes, output_nodes = 3, 3, 3
 alpha = 0.5
 
 # create neural network
-model = NeuralNetwork(input_nodes, hidden_nodes, output_nodes)
+model = NeuralNetwork(input_nodes, hidden_nodes, output_nodes, alpha)
+print(model.query([1, 0.74, -1.5]))
