@@ -20,6 +20,8 @@ class NeuralNetwork:
         self.w_input_hidden = np.random.uniform(low=-1.0, high=1.0, size=(self.hidden_nodes, self.input_nodes))
         self.w_output_hidden = np.random.uniform(low=-1.0, high=1.0, size=(self.hidden_nodes, self.input_nodes))
 
+        # setup the activation function
+        self.activation_function = lambda x: special.expit(x) # using the sigmoid function
 
     # train the neural network
     def train(self):
@@ -27,7 +29,17 @@ class NeuralNetwork:
 
     # query the neural network
     def query(self):
-        pass
+        # calculate signals going into hidden layer
+        hidden_inputs = numpy.dot(self.w_input_hidden, inputs)
+        # calculate signals emerging from hidden layer
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+        # calculate signals going into output layer
+        final_inputs = numpy.dot(self.w_output_hidden, hidden_inputs)
+        # calculate signals emerging from final output layer
+        final_outputs = self.activation_function(final_inputs)
+
+        return final_outputs
 
 # neural network hyperparameters
 input_nodes, hidden_nodes, output_nodes = 3, 3, 3
