@@ -24,8 +24,21 @@ class NeuralNetwork:
         self.activation_function = lambda x: special.expit(x) # using the sigmoid function
 
     # train the neural network
-    def train(self):
-        pass
+    def train(self, inputs, targets):
+        # convert the inputs and targets into  2d arrays
+        inputs = np.array(inputs, ndmin=2).T
+        targets = np.array(targets, ndmin=2).T
+
+        # work out the output for training examples
+        # calculate signals going into hidden layer
+        hidden_inputs = np.dot(self.w_input_hidden, inputs)
+        # calculate signals emerging from hidden layer
+        hidden_outputs = self.activation_function(hidden_inputs)
+
+        # calculate signals going into final layer
+        final_inputs = np.array(self.w_hidden_output, hidden_outputs)
+        # calculate signals emerging from final output layer
+        final_outputs = self.activation_function(final_inputs)
 
     # query the neural network
     def query(self, input_list):
