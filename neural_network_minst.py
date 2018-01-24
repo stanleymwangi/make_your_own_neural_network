@@ -40,6 +40,20 @@ class NeuralNetwork:
         # calculate signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
 
+        # update weights based on error between prediction and target
+        # calculate error i.e. desired target output - calculated prediction
+        output_errors = targets - final_outputs
+
+        # hidden layer error derived by taking output errors split by weights and recombined at hidden nodes
+        hidden_errors = np.dot(self.w_hidden_output.T, output_errors)
+
+        # update the hidden weights for links between hidden and output layers
+        self.w_hidden_output += self.learning_rate * np.dot(output_errors * final_outputs * (1.0 - final_outputs),
+                                                           np.transpose(hidden_outputs))
+        # update the weights for links between input and hidden layer
+        self.w_input_hidden += self.learning_rate * np.dot(hidden_errors * hidden_outputs * (1.0 - hidden_outputs),
+                                                           np.transpose(inputs))
+        
     # query the neural network
     def query(self, input_list):
         # convert input list to a 2d array
