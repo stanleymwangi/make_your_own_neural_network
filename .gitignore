@@ -204,4 +204,7 @@ venv.bak/
 
 # unnecessary files
 test.ipynb
+mnist_dataset/mnist_test.csv
+mnist_dataset/mnist_train.csv
+
 # End of https://www.gitignore.io/api/macos,python,pycharm,jupyternotebook
