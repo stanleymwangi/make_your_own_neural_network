@@ -65,7 +65,7 @@ class NeuralNetwork:
         hidden_outputs = self.activation_function(hidden_inputs)
 
         # calculate signals going into output layer
-        final_inputs = np.dot(self.w_hidden_output, hidden_inputs)
+        final_inputs = np.dot(self.w_hidden_output, hidden_outputs)
         # calculate signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
 
