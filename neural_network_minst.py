@@ -36,7 +36,7 @@ class NeuralNetwork:
         hidden_outputs = self.activation_function(hidden_inputs)
 
         # calculate signals going into final layer
-        final_inputs = np.array(self.w_hidden_output, hidden_outputs)
+        final_inputs = np.dot(self.w_hidden_output, hidden_outputs)
         # calculate signals emerging from final output layer
         final_outputs = self.activation_function(final_inputs)
 
@@ -72,9 +72,24 @@ class NeuralNetwork:
         return final_outputs
 
 # neural network hyperparameters
-input_nodes, hidden_nodes, output_nodes = 3, 3, 3
-alpha = 0.5
+input_nodes, hidden_nodes, output_nodes = 784, 100, 10
+alpha = 0.3
 
 # create neural network
-model = NeuralNetwork(input_nodes, hidden_nodes, output_nodes, alpha)
-print(model.query([1, 0.74, -1.5]))
+mnist_neural_network = NeuralNetwork(input_nodes, hidden_nodes, output_nodes, alpha)
+
+# load MNIST training data from CSV
+with open("mnist_dataset/mnist_train_100.csv") as f:
+    training_data = f.readlines()
+
+# train the neural network
+for record in training_data:
+    # split record strings into individual values
+    all_values = record.split(',')
+    # scale data to avoid network large weights and saturated network
+    inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+    # create target output values (0.01 for all except desired label which is 0.99)
+    targets = np.zeros(output_nodes) + 0.01
+    # all_values[0] is target label for current record
+    targets[int(all_values[0])] = 0.99
+    mnist_neural_network.train(inputs, targets)
