@@ -93,3 +93,39 @@ for record in training_data:
     # all_values[0] is target label for current record
     targets[int(all_values[0])] = 0.99
     mnist_neural_network.train(inputs, targets)
+
+# load MNIST test data from CSV
+with open("mnist_dataset/mnist_test_10.csv") as f:
+    test_data = f.readlines()
+
+# test the neural network
+
+# score_card keeps track of neural network performance
+score_card = []
+
+# loop over all test data records
+for record in test_data:
+    # split record strings into individual values
+    test_values = record.split(',')
+    # extract correct value which is first value in record
+    correct_label = int(test_values[0])
+    print("correct label: ", correct_label)
+    # scale data to avoid network large weights and saturated network
+    test_inputs = (np.asfarray(test_values[1:]) / 255.0 * 0.99) + 0.01
+
+    # get predictions based on test_input values from trained neural network
+    predicted_outputs = mnist_neural_network.query(test_inputs)
+    # get predicted label which is the maximum of predicted_outputs
+    predicted_label = np.argmax(predicted_outputs)
+    print("model prediction", predicted_label)
+
+    # classify each prediction as correct/incorrect by comparing correct_label (actual) to predicted_label
+    if predicted_label == correct_label:
+        score_card.append(1) # network answer matches correct answer
+    else:
+        score_card.append(0) # network answer does not match correct answer
+
+    # all_values[0] is target label for current record
+    targets[int(all_values[0])] = 0.99
+    mnist_neural_network.train(inputs, targets)
+
