@@ -129,3 +129,6 @@ for record in test_data:
     targets[int(all_values[0])] = 0.99
     mnist_neural_network.train(inputs, targets)
 
+# calculate performance
+score_card_array = np.asfarray(score_card)
+print("\nperformance = ", score_card_array.sum() / score_card_array.size)
