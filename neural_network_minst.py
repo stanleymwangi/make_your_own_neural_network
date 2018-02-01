@@ -1,6 +1,9 @@
 import numpy as np
 from scipy import special
 
+train_data_loc = "mnist_dataset/mnist_train.csv"
+test_data_loc = "mnist_dataset/mnist_test.csv"
+
 # neural network class definition
 class NeuralNetwork:
 
@@ -79,7 +82,7 @@ alpha = 0.3
 mnist_neural_network = NeuralNetwork(input_nodes, hidden_nodes, output_nodes, alpha)
 
 # load MNIST training data from CSV
-with open("mnist_dataset/mnist_train_100.csv") as f:
+with open(train_data_loc) as f:
     training_data = f.readlines()
 
 # train the neural network
@@ -95,7 +98,7 @@ for record in training_data:
     mnist_neural_network.train(inputs, targets)
 
 # load MNIST test data from CSV
-with open("mnist_dataset/mnist_test_10.csv") as f:
+with open(test_data_loc) as f:
     test_data = f.readlines()
 
 # test the neural network
@@ -109,7 +112,6 @@ for record in test_data:
     test_values = record.split(',')
     # extract correct value which is first value in record
     correct_label = int(test_values[0])
-    print("correct label: ", correct_label)
     # scale data to avoid network large weights and saturated network
     test_inputs = (np.asfarray(test_values[1:]) / 255.0 * 0.99) + 0.01
 
@@ -117,7 +119,6 @@ for record in test_data:
     predicted_outputs = mnist_neural_network.query(test_inputs)
     # get predicted label which is the maximum of predicted_outputs
     predicted_label = np.argmax(predicted_outputs)
-    print("model prediction", predicted_label)
 
     # classify each prediction as correct/incorrect by comparing correct_label (actual) to predicted_label
     if predicted_label == correct_label:
