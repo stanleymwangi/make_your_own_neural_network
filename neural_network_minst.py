@@ -86,16 +86,20 @@ with open(train_data_loc) as f:
     training_data = f.readlines()
 
 # train the neural network
-for record in training_data:
-    # split record strings into individual values
-    all_values = record.split(',')
-    # scale data to avoid network large weights and saturated network
-    inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
-    # create target output values (0.01 for all except desired label which is 0.99)
-    targets = np.zeros(output_nodes) + 0.01
-    # all_values[0] is target label for current record
-    targets[int(all_values[0])] = 0.99
-    mnist_neural_network.train(inputs, targets)
+epochs = 10 # epochs is number of times training data set is used for training
+for e in range(epochs):
+
+    # training run
+    for record in training_data:
+        # split record strings into individual values
+        all_values = record.split(',')
+        # scale data to avoid network large weights and saturated network
+        inputs = (np.asfarray(all_values[1:]) / 255.0 * 0.99) + 0.01
+        # create target output values (0.01 for all except desired label which is 0.99)
+        targets = np.zeros(output_nodes) + 0.01
+        # all_values[0] is target label for current record
+        targets[int(all_values[0])] = 0.99
+        mnist_neural_network.train(inputs, targets)
 
 # load MNIST test data from CSV
 with open(test_data_loc) as f:
