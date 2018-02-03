@@ -76,7 +76,7 @@ class NeuralNetwork:
 
 # neural network hyperparameters
 input_nodes, hidden_nodes, output_nodes = 784, 100, 10
-alpha = 0.3
+alpha = 0.1
 
 # create neural network
 mnist_neural_network = NeuralNetwork(input_nodes, hidden_nodes, output_nodes, alpha)
@@ -86,7 +86,7 @@ with open(train_data_loc) as f:
     training_data = f.readlines()
 
 # train the neural network
-epochs = 10 # epochs is number of times training data set is used for training
+epochs = 7 # epochs is number of times training data set is used for training
 for e in range(epochs):
 
     # training run
